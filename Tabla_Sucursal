@@ -1,1 +1,18 @@
+CREATE TABLE sucursales (
+    sucursal_id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_sucursal CHAR(40),
+    ubicacion_sucursal VARCHAR(200),
+    horario_sucursal VARCHAR(20),
+    telefono_sucursal VARCHAR(10)
+);
 
+INSERT INTO sucursales (nombre_sucursal, ubicacion_sucursal, horario_sucursal, telefono_sucursal) 
+VALUES 
+    ('Centro coatzacoalcos', 'Av. Hidalgo N° 600, Esq. Allende, Col. Centro. Coatzacoalcos, Veracruz', '8:00 am a 10:00 pm', '9212121386'),
+    ('Soriana palmar', 'Av. Las palmas N° 101 Int. Loc. 17, Col. Paraíso (Frente a Sam’s).  Coatzacoalcos, Veracruz', '8:00 am a 10:00 pm', '9212121386'),
+    ('Malecon', 'Manlio Fabio Altamirano N° 2407 Col. Petroquimica (Frente a la plaza de las culturas). Coatzacoalcos, Veracruz', '8:00 am a 10:00 pm', '9212137072'),
+    ('Soriana mercado', 'Blvd. Juan Osorio Lopez N° 100 Int. Loc. 2, 3 y 4, Col. Héroes de Nacozari (Frente a la terminal del ADO) Coatzacoalcos, Veracruz', '8:00 am a 10:00 pm', '9212173716'),
+    ('Gaviotas', 'Av. Jirafas N° 137 Esq. Ceiba, Col. Gaviotas', '8:00 am a 10:00 pm', '9216882551'),
+    ('Soriana cuauhtemoc', 'Plaza Soriana Col. Cuauhtemoc. Minatitlan, Veracruz', '8:00 am a 10:00 pm', '9222239947'),
+    ('Centro minatitlan', 'José Arenas N° 14 Col. Centro. Minatilan, Veracruz', '8:00 am a 6:00 pm', '9222237340'),
+    ('Instituto tecnologico', 'Instituto Tecnológico Col. Insurgentes Norte. Minatitlan, Veracruz', '8:00 am a 10:00 pm', '9222417821');

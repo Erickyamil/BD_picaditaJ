@@ -1,1 +1,34 @@
+CREATE TABLE convenio (
+    convenio_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    empresa VARCHAR(20) NOT NULL,
+    beneficio VARCHAR(60),
+    condicion VARCHAR(20) NOT NULL,
+    fecha_registro DATE NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL
+);
 
+INSERT INTO convenio (empresa, beneficio, condicion, fecha_registro, fecha_inicio, fecha_fin)
+VALUES 
+('Animalia', '50% de descuento en estética canina', 'Ticket Consumo más $370', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Imper PASA', '15% de descuento en Imper', 'Ticket Consumo más $370', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Autoclean', 'Gratis un lavado de autoexpress', 'Ticket Consumo más $370', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Holistic Versátil', 'Una membresía con un masaje terapéutico gratis', 'Ticket Consumo más $370', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Bambutea', 'Una nieve mediana gratis', 'Ticket Consumo más $370', '2022-01-01', '2022-02-01', '2026-02-01'),
+('FUTFITNEES', 'Una inscripción gratis', 'Ticket Consumo más $370', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Kolors', '10% de descuento en compra digital de boletos', 'Ticket Consumo más $370', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Silicia', '35% de descuento en servicios de spa', 'Ticket Consumo más $370', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Salón JG', 'Cejas HD al realizar cualquier aplicación de pestañas', 'Ticket Consumo más $370', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Casa Verde', '20% de descuento y un producto gratis', 'Ticket Consumo más $370', '2022-01-01', '2022-02-01', '2026-02-01'),
+('UNID', '60% de descuento en inscripción', 'Ticket Consumo más $370', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Animalia', '10% de descuento en servicios', 'Presentar "membresía"', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Imper PASA', '5% de descuento en el total de la cuenta', 'Presentar "membresía"', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Autoclean', '10% de descuento en paquetes de embellecimiento automotriz', 'Presentar "membresía"', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Holistic Versátil', '10% de descuento en servicios en general', 'Presentar "membresía"', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Bambutea', '10% de descuento en el total de la cuenta', 'Presentar "membresía"', '2022-01-01', '2022-02-01', '2026-02-01'),
+('FUTFITNEES', '10% de descuento en el pago de 3 mensualidades juntas', 'Presentar "membresía"', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Kolors', NULL, 'Presentar "membresía"', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Silicia', '5% de descuento adicional en cualquier costo de promoción', 'Presentar "membresía"', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Salón JG', '10% de descuento en cualquier servicio', 'Presentar "membresía"', '2022-01-01', '2022-02-01', '2026-02-01'),
+('Casa Verde', '10% de descuento en compras de $300', 'Presentar "membresía"', '2022-01-01', '2022-02-01', '2026-02-01'),
+('UNID', '5% de descuento adicional en becas de colegiaturas', 'Presentar "membresía"', '2022-01-01', '2022-02-01', '2026-02-01');

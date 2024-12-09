@@ -1,7 +1,9 @@
 CREATE TABLE mesa (
     mesa_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    numero_mesa INT NOT NULL,
-    total_personas INT NOT NULL
+    numero_mesa VARCHAR(3) NOT NULL,
+    total_personas INT NOT NULL,
+    sucursal_id INT,
+    FOREIGN KEY (sucursal_id) REFERENCES sucursal(sucursal_id)
 );
 
 INSERT INTO mesa (numero_mesa, total_personas) VALUES (10, 4);

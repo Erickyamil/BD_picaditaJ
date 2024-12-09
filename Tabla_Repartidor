@@ -1,0 +1,48 @@
+CREATE TABLE repartidor (
+    empleado_id INT PRIMARY KEY,
+    matricula_vehiculo VARCHAR(10),
+    no_licencia VARCHAR(20),
+    FOREIGN KEY (empleado_id) REFERENCES empleado(empleado_id)
+);
+
+-- Insertar datos aleatorios en la tabla Repartidor
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (1, 'Z4XQ7V', 'G3T9P8');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (2, 'R5K2J8', 'F7L1M3');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (3, 'V9P6Y4', 'H2R5T1');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (4, 'L8N3Q5', 'X4V2T7');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (5, 'K3Z8P1', 'R9G4T6');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (6, 'P4Y2V7', 'L3T5R9');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (7, 'Q1R6L4', 'Z5T8P2');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (8, 'F2G9K3', 'M4L1T8');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (9, 'T5P4Y6', 'R3Z2L8');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (10, 'Z3L8P5', 'V6T4R2');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (11, 'M7P2V4', 'T5L9R3');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (12, 'R4L5T8', 'G2V7P1');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (13, 'K6P1V7', 'Z3T4L5');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (14, 'V3G5L2', 'R8T4P6');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (15, 'T2L4P6', 'M5R7T3');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (16, 'P5R2L8', 'V4T1G6');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (17, 'L9G3T5', 'P7R4L2');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (18, 'R1T5P4', 'L2G8R3');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (19, 'G2P4V7', 'T5L9R1');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (20, 'T6R3L5', 'P4G2V8');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (21, 'K5T2L9', 'R8V4G3');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (22, 'V4P6T2', 'G3L8R1');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (23, 'R9L5P3', 'T4G2V7');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (24, 'T1G4P7', 'L5R2V8');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (25, 'G7P2V4', 'T6L3R5');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (26, 'L4T5P6', 'R3G2V8');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (27, 'T2G4L5', 'P6R3V7');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (28, 'R5T6L3', 'G2P4V8');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (29, 'L2P5T4', 'R8G3V1');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (30, 'T3R5L2', 'G4P1V6');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (31, 'G6P2V4', 'T5L9R8');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (32, 'R4G1T5', 'L2P3V7');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (33, 'L7P4T2', 'R5G1V8');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (34, 'T5R2L8', 'G4P6V3');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (35, 'G3P1V6', 'T2L4R5');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (36, 'R2T5L4', 'G3P7V1');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (37, 'L4T5P6', 'R8G3V2');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (38, 'T3G1L5', 'P6R4V2');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (39, 'R1P6T2', 'G4L5V3');
+INSERT INTO repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES (40, 'L9T2G5', 'R7P3V6');

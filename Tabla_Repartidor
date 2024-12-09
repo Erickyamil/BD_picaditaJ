@@ -1,7 +1,7 @@
 CREATE TABLE repartidor (
     empleado_id INT PRIMARY KEY,
-    matricula_vehiculo VARCHAR(10),
-    no_licencia VARCHAR(20),
+    matricula_vehiculo VARCHAR(7),
+    no_licencia VARCHAR(9),
     FOREIGN KEY (empleado_id) REFERENCES empleado(empleado_id)
 );
 

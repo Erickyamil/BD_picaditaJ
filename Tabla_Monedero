@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS Monedero;
+CREATE TABLE Monedero (
+  monedero_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nombre_cliente VARCHAR(20) NOT NULL,
+  apellido_paterno_cliente VARCHAR(15) NOT NULL,
+  apellido_materno_cliente VARCHAR(15),
+  fecha_nacimiento_cliente DATE NOT NULL,
+  fecha_registro DATETIME NOT NULL,
+  saldo INT(6),
+	transaccion_id INT,
+	FOREIGN KEY(transaccion_id) REFERENCES Transaccion(transaccion_id));
+	

@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS Sucursal;
+CREATE TABLE Sucursal(
+	sucursal_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nombre_sucursal VARCHAR(15) NOT NULL,
+	ubicacion_sucursal VARCHAR(60) NOT NULL,
+	horario_sucursal_apertura TIME DEFAULT NULL,
+	horario_sucursal_cierre TIME DEFAULT NULL,
+	numero_telefonico_sucursal CHAR(12) NOT NULL,
+	rfc_sucursal VARCHAR(13) NOT NULL),
+	razon_social_id INT,
+	politica_id INT,
+	FOREIGN KEY (razon_social_id) REFERENCES RazonSocial(razon_social_id),
+	FOREIGN KEY (politica_id) REFERENCES Politica(politica_id));

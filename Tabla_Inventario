@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS Inventario;
+CREATE TABLE Inventario (
+   objeto_inventario_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   cantidad_en_inventario INT(5) NOT NULL,
+   unidad_medida VARCHAR(20) NOT NULL);

@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS Producto_Paquete;
+CREATE TABLE Producto_Paquete (
+   producto_paquete_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   producto_id INT,
+   FOREIGN KEY (producto_id) REFERENCES Producto(producto_id));
+

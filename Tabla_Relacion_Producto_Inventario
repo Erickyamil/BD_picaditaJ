@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS Producto_Inventario;
+CREATE TABLE Producto_Inventario (
+   producto_id INT NOT NULL,
+   objeto_inventario_id INT NOT NULL,
+   PRIMARY KEY (producto_id, objeto_inventario_id),
+   FOREIGN KEY (producto_id) REFERENCES Producto(producto_id),
+   FOREIGN KEY (objeto_inventario_id) REFERENCES Inventario(objeto_inventario_id));

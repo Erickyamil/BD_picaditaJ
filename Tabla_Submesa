@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS Submesa;
+CREATE TABLE Submesa(
+	submesa_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nombre_cliente VARCHAR(20),
+	fecha DATETIME DEFAULT NULL,
+	numero_personas INT(2) NOT NULL,
+	mesa_id INT,
+	FOREIGN KEY (mesa_id) REFERENCES Mesa(mesa_id));

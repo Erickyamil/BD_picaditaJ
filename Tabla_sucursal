@@ -6,8 +6,4 @@ CREATE TABLE Sucursal(
 	horario_sucursal_apertura TIME DEFAULT NULL,
 	horario_sucursal_cierre TIME DEFAULT NULL,
 	numero_telefonico_sucursal CHAR(12) NOT NULL,
-	rfc_sucursal VARCHAR(13) NOT NULL),
-	razon_social_id INT,
-	politica_id INT,
-	FOREIGN KEY (razon_social_id) REFERENCES RazonSocial(razon_social_id),
-	FOREIGN KEY (politica_id) REFERENCES Politica(politica_id));
+	rfc_sucursal VARCHAR(13) NOT NULL);

@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS Tiene;
+CREATE TABLE Tiene (
+   razon_social_id INT,
+   sucursal_id INT,
+   PRIMARY KEY (razon_social_id, sucursal_id),
+   FOREIGN KEY (razon_social_id) REFERENCES RazonSocial(razon_social_id),
+   FOREIGN KEY (sucursal_id) REFERENCES Sucursal(sucursal_id));

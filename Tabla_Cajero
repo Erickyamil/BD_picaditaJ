@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS Cajero;
+CREATE TABLE Cajero(
+	total_transacciones INT(5) NOT NULL,
+	empleado_id INT,
+	FOREIGN KEY(empleado_id) REFERENCES Empleado(empleado_id));
+	

@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS OrdenDomicilio;
+CREATE TABLE OrdenDomicilio(
+	direccion VARCHAR(80) NOT NULL,
+	coste DECIMAL(10) NOT NULL,
+	orden_id INT,
+	empleado_id INT,
+	FOREIGN KEY(empleado_id) REFERENCES Empleado(empleado_id),
+	FOREIGN KEY(orden_id) REFERENCES Orden(orden_id));

@@ -1,1 +1,4 @@
-
+DROP TABLE IF EXISTS Categoria;
+CREATE TABLE Categoria (
+   categoria_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   nombre_categoria VARCHAR(30) NOT NULL);

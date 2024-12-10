@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS Orden;
+CREATE TABLE Orden(
+	orden_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	folio VARCHAR(5) NOT NULL,
+	tipo VARCHAR(10) NOT NULL,
+	no_orden INT(5) NOT NULL,
+	forma_pago CHAR(10) NOT NULL,
+	fecha DATETIME DEFAULT NULL,
+	cambio DECIMAL(10) NOT NULL,
+	entregado DECIMAL(10) NOT NULL,
+	subtotal DECIMAL(10) NOT NULL,
+	total DECIMAL(10) NOT NULL,
+	submesa_id INT,
+	FOREIGN KEY(submesa_id) REFERENCES Submesa(submesa_id));

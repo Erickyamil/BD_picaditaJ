@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS Financiera;
+CREATE TABLE Financiera(
+	politica_id INT(5) NOT NULL,
+	valor DOUBLE NOT NULL,
+	FOREIGN KEY (politica_id) REFERENCES Politica(politica_id));

@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS Ingrediente_Proveedor; 
+CREATE TABLE Ingrediente_Proveedor (
+   ingrediente_id INT NOT NULL,
+   proveedor_id INT NOT NULL,
+   fecha_entrega DATETIME(0) DEFAULT NULL,
+   importe DECIMAL(8) NOT NULL,
+   PRIMARY KEY (ingrediente_id, proveedor_id),
+   FOREIGN KEY (ingrediente_id) REFERENCES Ingrediente(ingrediente_id),
+   FOREIGN KEY (proveedor_id) REFERENCES Proveedor(proveedor_id));

@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS Transaccion;
+CREATE TABLE Transaccion (
+  transaccion_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  fecha_transaccion DATETIME DEFAULT NULL,
+  cantidad INT(5) NOT NULL,
+	orden_id INT,
+	FOREIGN KEY(orden_id) REFERENCES Orden(orden_id));

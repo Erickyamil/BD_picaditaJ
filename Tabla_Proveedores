@@ -1,1 +1,7 @@
-
+DROP TABLE IF EXISTS Proveedor;   
+CREATE TABLE Proveedor (
+   proveedor_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   nombre_proveedor VARCHAR(30) NOT NULL,
+   telefono VARCHAR(15),
+   correo VARCHAR(60),
+   direccion VARCHAR(60));

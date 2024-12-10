@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS Ingrediente;
+CREATE TABLE Ingrediente (
+  ingrediente_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nombre_ingrediente VARCHAR(30) NOT NULL,
+  objeto_inventario_id INT,
+	FOREIGN KEY (objeto_inventario_id) REFERENCES Inventario(objeto_inventario_id));

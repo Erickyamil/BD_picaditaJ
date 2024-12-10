@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS Politica;
+CREATE TABLE Politica(
+	politica_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nombre_politica VARCHAR(50) NOT NULL,
+	condicion VARCHAR(20) NOT NULL,
+	fecha_agregada DATETIME DEFAULT NULL);

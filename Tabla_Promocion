@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS Promocion;
+CREATE TABLE Promocion (
+  promocion_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(30) NOT NULL,
+  descripcion VARCHAR(60) NOT NULL,
+  condicion VARCHAR(30) NOT NULL,
+  dia_aplicable ENUM('lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo') NOT NULL,
+  fecha_registro DATETIME NOT NULL,
+  fecha_inicio DATETIME NOT NULL,
+  fecha_fin DATETIME DEFAULT NULL,
+  promocion_activa BOOLEAN NOT NULL,
+	orden_id INT,
+	FOREIGN KEY(orden_id) REFERENCES Orden(orden_id));

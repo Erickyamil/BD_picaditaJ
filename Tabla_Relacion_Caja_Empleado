@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS Atiende;
+CREATE TABLE Atiende(
+	saldo_inicial DECIMAL(0),
+	caja_id INT,
+	empleado_id INT,
+	FOREIGN KEY(caja_id) REFERENCES Caja(caja_id),
+	FOREIGN KEY(empleado_id) REFERENCES Empleado(empleado_id));

@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS Aplica;
+CREATE TABLE Aplica (
+   orden_id INT,
+   promocion_id INT,
+   PRIMARY KEY (orden_id, promocion_id),
+   FOREIGN KEY (orden_id) REFERENCES Orden(orden_id),
+   FOREIGN KEY (promocion_id) REFERENCES Promocion(promocion_id));

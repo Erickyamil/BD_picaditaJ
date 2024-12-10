@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS SeAplica;
+CREATE TABLE SeAplica (
+   politica_id INT,
+   sucursal_id INT,
+   PRIMARY KEY (politica_id, sucursal_id),
+   FOREIGN KEY (politica_id) REFERENCES Politica(politica_id),
+   FOREIGN KEY (sucursal_id) REFERENCES Sucursal(sucursal_id));

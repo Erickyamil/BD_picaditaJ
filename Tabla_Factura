@@ -1,1 +1,12 @@
-
+DROP TABLE IF EXISTS Factura;
+CREATE TABLE Factura (
+  factura_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  uso_cfdi INT(20) NOT NULL,
+  rfc VARCHAR(13) NOT NULL,
+  regimen_fiscal VARCHAR(6) NOT NULL,
+  domicilio_fiscal VARCHAR(60) NOT NULL,
+  referencia VARCHAR(20) NOT NULL,
+  nombre_sat VARCHAR(60) NOT NULL,
+  fecha_emision_factura DATETIME DEFAULT NULL,
+	orden_id INT,
+	FOREIGN KEY(orden_id) REFERENCES Orden(orden_id));

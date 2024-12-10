@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS RazonSocial;
+CREATE TABLE RazonSocial(
+	razon_social_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(30) NOT NULL,
+	rfc_razon_social VARCHAR(13) NOT NULL);

@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS OrdenDetalle;
+CREATE TABLE OrdenDetalle(
+	detalle_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	cantidad INT(2) NOT NULL,
+	importe DECIMAL(10) NOT NULL,
+	orden_id INT,
+	FOREIGN KEY(orden_id) REFERENCES Orden(orden_id));

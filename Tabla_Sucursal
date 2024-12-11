@@ -1,11 +1,12 @@
-CREATE TABLE sucursales (
-    sucursal_id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_sucursal CHAR(40),
-    ubicacion_sucursal VARCHAR(200),
-    horario_sucursal VARCHAR(20),
-    telefono_sucursal VARCHAR(10)
-);
-
+DROP TABLE IF EXISTS Sucursal;
+CREATE TABLE Sucursal(
+	sucursal_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nombre_sucursal VARCHAR(60) NOT NULL,
+	ubicacion_sucursal VARCHAR(100) NOT NULL,
+	numero_telefonico_sucursal CHAR(12) NOT NULL,
+	objeto_inventario_id INT(5),
+	FOREIGN KEY (objeto_inventario_id) REFERENCES Inventario(objeto_inventario_id));
+	
 INSERT INTO Sucursal (nombre_sucursal, ubicacion_sucursal, numero_telefonico_sucursal) VALUES 
 	('La Picadita Jarocha Sucursal Centro', 'Av. Hidalgo No. 600, Esq. Allende, Col. Centro', '9212121386'),
 	('La Picadita Jarocha Sucursal El Palmar', 'Av. Las Palmas No. 101 Int. Loc. 17, Col. Paraiso', '9212121386'),

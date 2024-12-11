@@ -1,5 +1,6 @@
-CREATE DATABASE IF NOT EXISTS ultimapicadita;
-USE ultimapicadita;
+DROP DATABASE IF EXISTS picaditamonse;
+CREATE DATABASE picaditamonse;
+USE picaditamonse;
 
 -- tabla 1
 DROP TABLE IF EXISTS RazonSocial;
@@ -15,6 +16,70 @@ CREATE TABLE Politica(
 	nombre_politica VARCHAR(50) NOT NULL,
 	condicion VARCHAR(20) NOT NULL,
 	fecha_agregada DATETIME DEFAULT NULL);
+	
+	-- tabla 32
+DROP TABLE IF EXISTS Proveedor;   
+CREATE TABLE Proveedor (
+   proveedor_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   nombre_proveedor VARCHAR(30) NOT NULL,
+   telefono VARCHAR(15),
+   correo VARCHAR(60),
+   direccion VARCHAR(60));
+   
+-- tabla 28
+DROP TABLE IF EXISTS Inventario;
+CREATE TABLE Inventario (
+   objeto_inventario_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   cantidad_en_inventario INT(5) NOT NULL,
+   unidad_medida VARCHAR(20) NOT NULL);
+
+-- tabla 5
+DROP TABLE IF EXISTS Dia;
+CREATE TABLE Dia(
+	dia_id INT(1) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	dia VARCHAR(12) NOT NULL);
+	
+-- tabla 22
+DROP TABLE IF EXISTS Promocion;
+CREATE TABLE Promocion (
+   promocion_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   nombre VARCHAR(30) NOT NULL,
+   descripcion VARCHAR(60) NOT NULL,
+   condicion ENUM('descuento', 'oferta', 'combo') NOT NULL,  
+   dia_aplicable ENUM('lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo') NOT NULL,
+   fecha_registro DATETIME NOT NULL,
+   fecha_inicio DATETIME NOT NULL,
+   fecha_fin DATETIME DEFAULT NULL,
+   promocion_activa BOOLEAN NOT NULL);
+   
+-- tabla 24
+DROP TABLE IF EXISTS Categoria;
+CREATE TABLE Categoria (
+   categoria_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   nombre_categoria VARCHAR(30) NOT NULL);
+   
+   INSERT INTO Categoria (nombre_categoria)VALUES
+    ('Picada'),
+    ('Memela'),
+    ('Huarache'),
+    ('Gordita'),
+    ('Salbute'),
+    ('Empanada'),
+    ('Tostada'),
+    ('Doblada'),
+    ('Torta'),
+    ('Platillo Regional'),
+    ('Huevos'),
+    ('Caldos'),
+    ('Tacos'),
+    ('Ensaladas'),
+    ('Menú'),
+    ('Refresco'),
+    ('Bebida Caliente'),
+    ('Agua Fresca'),
+    ('Jugo'),
+    ('Licuado'),
+    ('Postre');
 
 -- tabla 3
 DROP TABLE IF EXISTS Financiera;
@@ -27,18 +92,21 @@ CREATE TABLE Financiera(
 DROP TABLE IF EXISTS Sucursal;
 CREATE TABLE Sucursal(
 	sucursal_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	nombre_sucursal VARCHAR(15) NOT NULL,
-	ubicacion_sucursal VARCHAR(60) NOT NULL,
+	nombre_sucursal VARCHAR(60) NOT NULL,
+	ubicacion_sucursal VARCHAR(100) NOT NULL,
 	numero_telefonico_sucursal CHAR(12) NOT NULL,
 	objeto_inventario_id INT(5),
-	FOREIGN KEY (objeto_inventario_id) REFERENCES Inventario(objeto_inventario_id);
-	);
-
--- tabla 5
-DROP TABLE IF EXISTS Dia;
-CREATE TABLE Dia(
-	dia_id INT(1) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	dia VARCHAR(12) NOT NULL);
+	FOREIGN KEY (objeto_inventario_id) REFERENCES Inventario(objeto_inventario_id));
+	
+INSERT INTO Sucursal (nombre_sucursal, ubicacion_sucursal, numero_telefonico_sucursal) VALUES 
+	('La Picadita Jarocha Sucursal Centro', 'Av. Hidalgo No. 600, Esq. Allende, Col. Centro', '9212121386'),
+	('La Picadita Jarocha Sucursal El Palmar', 'Av. Las Palmas No. 101 Int. Loc. 17, Col. Paraiso', '9212121386'),
+	('La Picadita Jarocha Sucursal Malecon Costero', 'Altamirano No. 2407 Col. Petroquimica', '9212137072'),
+	('La Picadita Jarocha Sucursal Soriana Mercado Coatza', 'Blvd. Juan Osorio Lopez No. 100 Int. Loc. 2, 3 y 4, Col. Héroes de Nacozari', '9212173716'),
+	('La Picadita Jarocha Sucursal Gaviotas', 'Av. Jirafas No. 137, esquina con Ceiba, Col. Gaviotas', '9216882551'),
+	('La Picadita Jarocha Sucursal Soriana Cuauhtémoc', 'Plaza Soriana, Col. Cuauhtemoc', '9222239947'),
+	('La Picadita Jarocha Sucursal Centro', 'José Arenas N° 14, Col. Centro ', '9222237340'),
+	('La Picadita Jarocha Sucursal Instituto Tecnológico', 'Instituto Tecnológico, Col. Insurgentes Norte', '9222417821');
 
 -- tabla 6
 DROP TABLE IF EXISTS Trabaja;
@@ -78,6 +146,208 @@ CREATE TABLE Mesa(
 	sucursal_id INT,
 	FOREIGN KEY (sucursal_id) REFERENCES Sucursal(sucursal_id));
 
+INSERT INTO mesa (numero_mesa, total_personas, sucursal_id) VALUES 
+	(10, 4, 1),
+	(20, 6, 5),
+	(30, 8, 7),
+	(40, 4, 8),
+	(50, 6, 4),
+	(60, 8, 3),
+	(70, 4, 1),
+	(80, 6, 2),
+	(90, 8, 3),
+	(100, 4, 4),
+	(110, 6, 5),
+	(120, 8, 6),
+	(130, 4, 7),
+	(140, 6, 8),
+	(150, 8, 1),
+	(160, 4, 2),
+	(170, 6, 3),
+	(180, 8, 4),
+	(190, 4, 5),
+	(200, 6, 6),
+	(210, 8, 7),
+	(220, 4, 8),
+	(230, 6, 1),
+	(240, 8, 2),
+	(250, 4, 3),
+	(260, 6, 4),
+	(270, 8, 5),
+	(280, 4, 6),
+	(290, 6, 7),
+	(300, 8, 8),
+	(310, 4, 1),
+	(320, 6, 2),
+	(330, 8, 3),
+	(340, 4, 4),
+	(350, 6, 5),
+	(360, 8, 6),
+	(370, 4, 7),
+	(380, 6, 8),
+	(390, 8, 1),
+	(400, 4, 2),
+	(410, 6, 3),
+	(420, 8, 4),
+	(430, 4, 5),
+	(440, 6, 6),
+	(450, 8, 7),
+	(460, 4, 8),
+	(470, 6, 1),
+	(480, 8, 2),
+	(490, 4, 3),
+	(500, 6, 4),
+	(510, 8, 5),
+	(520, 4, 6),
+	(530, 6, 7),
+	(540, 8, 8),
+	(550, 4, 1),
+	(560, 6, 2),
+	(570, 8, 3),
+	(580, 4, 4),
+	(590, 6, 5),
+	(600, 8, 6),
+	(610, 4, 7),
+	(620, 6, 8),
+	(630, 8, 1),
+	(640, 4, 2),
+	(650, 6, 3),
+	(660, 8, 4),
+	(670, 4, 5),
+	(680, 6, 6),
+	(690, 8, 7),
+	(700, 4, 8),
+	(710, 6, 1),
+	(720, 8, 2),
+	(730, 4, 3),
+	(740, 6, 4),
+	(750, 8, 5),
+	(760, 4, 6),
+	(770, 6, 7),
+	(780, 8, 8),
+	(790, 4, 1),
+	(800, 6, 2),
+	(810, 8, 3),
+	(820, 4, 4),
+	(830, 6, 5),
+	(840, 8, 6),
+	(850, 4, 7),
+	(860, 6, 8),
+	(870, 8, 1),
+	(880, 4, 2),
+	(890, 6, 3),
+	(900, 8, 4),
+	(910, 4, 5),
+	(920, 6, 6),
+	(930, 8, 7),
+	(940, 4, 8),
+	(950, 6, 1),
+	(960, 8, 2),
+	(970, 4, 3),
+	(980, 6, 4),
+	(990, 8, 5),
+	(1000, 4, 6),
+	(1010, 6, 7),
+	(1020, 8, 8),
+	(1030, 4, 1),
+	(1040, 6, 2),
+	(1050, 8, 3),
+	(1060, 4, 4),
+	(1070, 6, 5),
+	(1080, 8, 6),
+	(1090, 4, 7),
+	(1100, 6, 8),
+	(1110, 8, 1),
+	(1120, 4, 2),
+	(1130, 6, 3),
+	(1140, 8, 4),
+	(1150, 4, 5),
+	(1160, 6, 6),
+	(1170, 8, 7),
+	(1180, 4, 8),
+	(1190, 6, 1),
+	(1200, 8, 2),
+	(1210, 4, 3),
+	(1220, 6, 4),
+	(1230, 8, 5),
+	(1240, 4, 6),
+	(1250, 6, 7),
+	(1260, 8, 8),
+	(1270, 4, 1),
+	(1280, 6, 2),
+	(1290, 8, 3),
+	(1300, 4, 4),
+	(1310, 6, 5),
+	(1320, 8, 6),
+	(1330, 4, 7),
+	(1340, 6, 8),
+	(1350, 8, 1),
+	(1360, 4, 2),
+	(1370, 6, 3),
+	(1380, 8, 4),
+	(1390, 4, 5),
+	(1400, 6, 6),
+	(1410, 8, 7),
+	(1420, 4, 8),
+	(1430, 6, 1),
+	(1440, 8, 2),
+	(1450, 4, 3),
+	(1460, 6, 4),
+	(1470, 8, 5),
+	(1480, 4, 6),
+	(1490, 6, 7),
+	(1500, 8, 8),
+	(1510, 4, 1),
+	(1520, 6, 2),
+	(1530, 8, 3),
+	(1540, 4, 4),
+	(1550, 6, 5),
+	(1560, 8, 6),
+	(1570, 4, 7),
+	(1580, 6, 8),
+	(1590, 8, 1),
+	(1600, 4, 2),
+	(1610, 6, 3),
+	(1620, 8, 4),
+	(1630, 4, 5),
+	(1640, 6, 6),
+	(1650, 8, 7),
+	(1660, 4, 8),
+	(1670, 6, 1),
+	(1680, 8, 2),
+	(1690, 4, 3),
+	(1700, 6, 4),
+	(1710, 8, 5),
+	(1720, 4, 6),
+	(1730, 6, 7),
+	(1740, 8, 8),
+	(1750, 4, 1),
+	(1760, 6, 2),
+	(1770, 8, 3),
+	(1780, 4, 4),
+	(1790, 6, 5),
+	(1800, 8, 6),
+	(1810, 4, 7),
+	(1820, 6, 8),
+	(1830, 8, 1),
+	(1840, 4, 2),
+	(1850, 6, 3),
+	(1860, 8, 4),
+	(1870, 4, 5),
+	(1880, 6, 6),
+	(1890, 8, 7),
+	(1900, 4, 8),
+	(1910, 6, 1),
+	(1920, 8, 2),
+	(1930, 4, 3),
+	(1940, 6, 4),
+	(1950, 8, 5),
+	(1960, 4, 6),
+	(1970, 6, 7),
+	(1980, 8, 8),
+	(1990, 4, 1),
+	(2000, 6, 2);
+
 -- tabla 10
 DROP TABLE IF EXISTS Submesa;
 CREATE TABLE Submesa(
@@ -91,19 +361,18 @@ CREATE TABLE Submesa(
 -- tabla 11
 DROP TABLE IF EXISTS Orden;
 CREATE TABLE Orden (
-    orden_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,  
-    folio VARCHAR(5) NOT NULL,                             
-    tipo VARCHAR(10) NOT NULL,                             
-    forma_pago CHAR(10) NOT NULL,                          
-    fecha DATETIME NOT NULL,                               
-    cambio DECIMAL(10, 2) NOT NULL,                        
-    entregado DECIMAL(10, 2) NOT NULL,                    
-    submesa_id INT,                                      
-    subtotal DECIMAL(10, 2) GENERATED ALWAYS AS (entregado - cambio) STORED, 
-    total DECIMAL(10, 2) GENERATED ALWAYS AS (subtotal * 1.16) STORED,       
-    no_orden_diario INT,                                  
-    FOREIGN KEY (submesa_id) REFERENCES Submesa(submesa_id) 
-);
+   orden_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,  
+   folio VARCHAR(5) NOT NULL,                             
+   tipo VARCHAR(10) NOT NULL,                             
+   forma_pago CHAR(10) NOT NULL,                          
+   fecha DATETIME NOT NULL,                               
+   cambio DECIMAL(10, 2) NOT NULL,                        
+   entregado DECIMAL(10, 2) NOT NULL,                    
+   submesa_id INT,                                      
+   subtotal DECIMAL(10, 2) GENERATED ALWAYS AS (entregado - cambio) STORED, 
+   total DECIMAL(10, 2) GENERATED ALWAYS AS (subtotal * 1.16) STORED,       
+   no_orden_diario INT,                                  
+   FOREIGN KEY (submesa_id) REFERENCES Submesa(submesa_id));
 
 -- Trigger para insertar no_orden_diario
 DELIMITER $$
@@ -112,11 +381,11 @@ CREATE TRIGGER antes_de_insertar_orden
 BEFORE INSERT ON Orden
 FOR EACH ROW
 BEGIN
-    DECLARE numero INT;
-    SELECT IFNULL(MAX(no_orden_diario), 0) + 1 INTO numero
-    FROM Orden
-    WHERE DATE(fecha) = DATE(NEW.fecha);
-    SET NEW.no_orden_diario = numero;
+   DECLARE numero INT;
+   SELECT IFNULL(MAX(no_orden_diario), 0) + 1 INTO numero
+   FROM Orden
+   WHERE DATE(fecha) = DATE(NEW.fecha);
+   SET NEW.no_orden_diario = numero;
 END $$
 
 DELIMITER ;
@@ -135,6 +404,17 @@ CREATE TABLE Factura (
 	orden_id INT,
 	FOREIGN KEY(orden_id) REFERENCES Orden(orden_id));
 
+-- tabla 14
+DROP TABLE IF EXISTS Monedero;
+CREATE TABLE Monedero (
+   monedero_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   nombre_cliente VARCHAR(20) NOT NULL,
+   apellido_paterno_cliente VARCHAR(15) NOT NULL,
+   apellido_materno_cliente VARCHAR(15),
+   fecha_nacimiento_cliente DATE NOT NULL,
+   fecha_registro DATETIME NOT NULL,
+   saldo DECIMAL(10, 2) NOT NULL DEFAULT 0);
+
 -- tabla 13 
 DROP TABLE IF EXISTS Transaccion;
 CREATE TABLE Transaccion (
@@ -146,18 +426,6 @@ CREATE TABLE Transaccion (
 	FOREIGN KEY(orden_id) REFERENCES Orden(orden_id),
 	FOREIGN KEY(monedero_id) REFERENCES Monedero(monedero_id));
 
--- tabla 14
-DROP TABLE IF EXISTS Monedero;
-CREATE TABLE Monedero (
-   monedero_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   nombre_cliente VARCHAR(20) NOT NULL,
-   apellido_paterno_cliente VARCHAR(15) NOT NULL,
-   apellido_materno_cliente VARCHAR(15),
-   fecha_nacimiento_cliente DATE NOT NULL,
-   fecha_registro DATETIME NOT NULL,
-   saldo DECIMAL(10, 2) NOT NULL DEFAULT 0
-);
-
 DELIMITER $$
 
 CREATE TRIGGER actualizar_saldo_monedero
@@ -165,9 +433,9 @@ AFTER INSERT ON Transaccion
 FOR EACH ROW
 BEGIN
     
-    UPDATE Monedero
-    SET saldo = saldo + NEW.cantidad
-    WHERE monedero_id = NEW.monedero_id;
+   UPDATE Monedero
+   SET saldo = saldo + NEW.cantidad
+   WHERE monedero_id = NEW.monedero_id;
 END $$
 
 DELIMITER ;
@@ -175,9 +443,9 @@ DELIMITER ;
 -- tabla 15
 DROP TABLE IF EXISTS Caja;
 CREATE TABLE Caja (
-    caja_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,  
-    fecha DATE NOT NULL,                                 
-    saldo_caja DECIMAL(10, 2) NOT NULL DEFAULT 0
+   caja_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,  
+   fecha DATE NOT NULL,                                 
+   saldo_caja DECIMAL(10, 2) NOT NULL DEFAULT 0
 );
 
 
@@ -228,15 +496,13 @@ CREATE TABLE Atiende (
     monto DECIMAL(10, 2) NOT NULL,                        
     fecha DATETIME NOT NULL,                             
     FOREIGN KEY (caja_id) REFERENCES Caja(caja_id),      
-    FOREIGN KEY (empleado_id) REFERENCES Empleado(empleado_id) 
-);
+    FOREIGN KEY (empleado_id) REFERENCES Empleado(empleado_id) );
 
 -- tabla 18
 CREATE TABLE Cajero (
     empleado_id INT NOT NULL PRIMARY KEY,                 
     total_transacciones INT DEFAULT 0,                    
-    FOREIGN KEY (empleado_id) REFERENCES Empleado(empleado_id)
-);
+    FOREIGN KEY (empleado_id) REFERENCES Empleado(empleado_id));
 
 DELIMITER $$
 
@@ -280,22 +546,7 @@ CREATE TABLE OrdenDetalle (
    orden_id INT,
    promocion_id INT,  
    FOREIGN KEY (orden_id) REFERENCES Orden(orden_id),
-   FOREIGN KEY (promocion_id) REFERENCES Promocion(promocion_id)  
-);
-
--- tabla 22
-DROP TABLE IF EXISTS Promocion;
-CREATE TABLE Promocion (
-   promocion_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   nombre VARCHAR(30) NOT NULL,
-   descripcion VARCHAR(60) NOT NULL,
-   condicion ENUM('descuento', 'oferta', 'combo') NOT NULL,  
-   dia_aplicable ENUM('lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo') NOT NULL,
-   fecha_registro DATETIME NOT NULL,
-   fecha_inicio DATETIME NOT NULL,
-   fecha_fin DATETIME DEFAULT NULL,
-   promocion_activa BOOLEAN NOT NULL
-);
+   FOREIGN KEY (promocion_id) REFERENCES Promocion(promocion_id));
 
 -- tabla 23
 DROP TABLE IF EXISTS PromocionDetalle;
@@ -306,12 +557,6 @@ CREATE TABLE PromocionDetalle (
    FOREIGN KEY (detalle_id) REFERENCES OrdenDetalle(detalle_id),
    FOREIGN KEY (promocion_id) REFERENCES Promocion(promocion_id));
 
--- tabla 24
-DROP TABLE IF EXISTS Categoria;
-CREATE TABLE Categoria (
-   categoria_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   nombre_categoria VARCHAR(30) NOT NULL);
-
 -- tabla 25 
 DROP TABLE IF EXISTS Producto; 
 CREATE TABLE Producto (
@@ -319,8 +564,7 @@ CREATE TABLE Producto (
    precio_unitario DECIMAL(10,2) NOT NULL,
    nombre_producto VARCHAR(15) NOT NULL,
    categoria_id INT,
-   FOREIGN KEY(categoria_id) REFERENCES Categoria(categoria_id)
-);
+   FOREIGN KEY(categoria_id) REFERENCES Categoria(categoria_id));
 
 -- tabla 26
 DROP TABLE IF EXISTS ProductoPromocion;
@@ -329,8 +573,7 @@ CREATE TABLE ProductoPromocion (
    promocion_id INT(5) NOT NULL,
    PRIMARY KEY (producto_id, promocion_id),
    FOREIGN KEY(producto_id) REFERENCES Producto(producto_id),
-   FOREIGN KEY(promocion_id) REFERENCES Promocion(promocion_id)
-);
+   FOREIGN KEY(promocion_id) REFERENCES Promocion(promocion_id));
 
 -- tabla 27
 DROP TABLE IF EXISTS Producto_Paquete;
@@ -338,13 +581,6 @@ CREATE TABLE Producto_Paquete (
    producto_paquete_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
    producto_id INT,
    FOREIGN KEY (producto_id) REFERENCES Producto(producto_id));
-   
--- tabla 28
-DROP TABLE IF EXISTS Inventario;
-CREATE TABLE Inventario (
-   objeto_inventario_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   cantidad_en_inventario INT(5) NOT NULL,
-   unidad_medida VARCHAR(20) NOT NULL);
 
 -- tabla 29
 DROP TABLE IF EXISTS SucursalInventario;
@@ -353,8 +589,7 @@ CREATE TABLE SucursalInventario (
     objeto_inventario_id INT(5),
     PRIMARY KEY (sucursal_id, objeto_inventario_id),
     FOREIGN KEY (sucursal_id) REFERENCES Sucursal(sucursal_id),
-    FOREIGN KEY (objeto_inventario_id) REFERENCES Inventario(objeto_inventario_id)
-);
+    FOREIGN KEY (objeto_inventario_id) REFERENCES Inventario(objeto_inventario_id));
 
 -- tabla 30
 DROP TABLE IF EXISTS Producto_Inventario;
@@ -371,18 +606,7 @@ CREATE TABLE Ingrediente (
    ingrediente_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
    nombre_ingrediente VARCHAR(30) NOT NULL,
    objeto_inventario_id INT NOT NULL, 
-   FOREIGN KEY (objeto_inventario_id) REFERENCES Inventario(objeto_inventario_id)
-);
-
-
--- tabla 32
-DROP TABLE IF EXISTS Proveedor;   
-CREATE TABLE Proveedor (
-   proveedor_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   nombre_proveedor VARCHAR(30) NOT NULL,
-   telefono VARCHAR(15),
-   correo VARCHAR(60),
-   direccion VARCHAR(60));
+   FOREIGN KEY (objeto_inventario_id) REFERENCES Inventario(objeto_inventario_id));
    
 
 -- tabla 33
@@ -396,5 +620,3 @@ CREATE TABLE Ingrediente_Proveedor (
    FOREIGN KEY (ingrediente_id) REFERENCES Ingrediente(ingrediente_id),
    FOREIGN KEY (proveedor_id) REFERENCES Proveedor(proveedor_id)
 );
-
-SHOW TABLES;

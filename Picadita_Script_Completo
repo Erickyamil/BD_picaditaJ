@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS picaditamonse;
-CREATE DATABASE picaditamonse;
-USE picaditamonse;
+DROP DATABASE IF EXISTS Picadita;
+CREATE DATABASE Picadita;
+USE Picadita;
 
 -- tabla 1
 DROP TABLE IF EXISTS RazonSocial;

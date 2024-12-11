@@ -4,7 +4,7 @@ CREATE TABLE Categoria (
    nombre_categoria VARCHAR(30) NOT NULL);
 
 INSERT INTO Categoria VALUES
-	(1,'Picada'),
+    (1,'Picada'),
     (2,'Memela'),
     (3,'Huarache'),
     (4,'Gordita'),

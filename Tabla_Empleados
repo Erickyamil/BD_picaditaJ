@@ -1,1 +1,14 @@
-
+DROP TABLE IF EXISTS Empleado;
+CREATE TABLE Empleado (
+  empleado_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  apellido_paterno VARCHAR(20) NOT NULL,
+  apellido_materno VARCHAR(20) NOT NULL,
+  rfc VARCHAR(13) NOT NULL,
+  telefono CHAR(10) NOT NULL,
+  cargo VARCHAR(30) NOT NULL,
+  turno BOOLEAN NOT NULL,
+  salario DECIMAL(10,2) NOT NULL,
+  nombre VARCHAR(20) NOT NULL,
+  curp VARCHAR(18) NOT NULL,
+	caja_id INT,
+	FOREIGN KEY(caja_id) REFERENCES Caja(caja_id));

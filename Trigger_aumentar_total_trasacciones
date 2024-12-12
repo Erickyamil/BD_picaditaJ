@@ -1,0 +1,25 @@
+DELIMITER $$
+
+CREATE TRIGGER incrementar_total_transacciones
+AFTER INSERT ON Orden
+FOR EACH ROW
+BEGIN
+    -- Verifica si la submesa está asociada con una caja a través del cajero
+    DECLARE cajero_id INT;
+
+    -- Busca el cajero asociado con la orden
+    SELECT empleado_id
+    INTO cajero_id
+    FROM CajeroCaja
+    WHERE caja_id = (SELECT caja_id FROM OrdenCaja WHERE orden_id = NEW.orden_id LIMIT 1)
+    LIMIT 1;
+
+    -- Incrementa el total_transacciones del cajero asociado
+    IF cajero_id IS NOT NULL THEN
+        UPDATE Cajero
+        SET total_transacciones = total_transacciones + 1
+        WHERE empleado_id = cajero_id;
+    END IF;
+END$$
+
+DELIMITER ;

@@ -1,6 +1,14 @@
 DROP TABLE IF EXISTS Caja;
 CREATE TABLE Caja (
-   caja_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   saldo_caja DECIMAL(10) NOT NULL,
-   orden_id INT,
-   FOREIGN KEY(orden_id) REFERENCES Orden(orden_id));
+   caja_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,                                 
+   saldo_caja DECIMAL(10, 2) NOT NULL DEFAULT 0);
+   
+INSERT INTO Caja (saldo_caja) VALUES 
+	(3500.00), 
+	(4700.00), 
+	(5200.00), 
+	(6700.00), 
+	(3900.00), 
+	(7200.00), 
+	(8000.00), 
+	(9100.00);

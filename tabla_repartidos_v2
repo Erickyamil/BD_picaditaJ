@@ -1,0 +1,30 @@
+DROP TABLE IF EXISTS Repartidor;
+CREATE TABLE Repartidor (
+    empleado_id INT,
+    matricula_vehiculo VARCHAR(8),
+    no_licencia VARCHAR(12),
+    CONSTRAINT fk_empleado FOREIGN KEY (empleado_id)
+    REFERENCES Empleado(empleado_id) ON DELETE CASCADE
+);
+
+INSERT INTO Repartidor (empleado_id, matricula_vehiculo, no_licencia) VALUES
+(1, 'AB1234C', 'DEF56789G'),
+(3, 'HJ2345K', 'LMN67890O'),
+(6, 'PQ3456R', 'STU78901V'),
+(8, 'WX4567Y', 'ZAB89012B'),
+(10, 'CD5678E', 'FGH90123J'),
+(12, 'IJ6789M', 'KLM01234N'),
+(15, 'OP7890Q', 'RST12345P'),
+(17, 'UV8901W', 'XYZ23456R'),
+(20, 'EF9012G', 'HIJ34567L'),
+(22, 'KL0123N', 'MNO45678K'),
+(24, 'QR1234T', 'STU56789O'),
+(26, 'VW2345X', 'YZA67890P'),
+(28, 'GH3456I', 'JKL78901M'),
+(30, 'MN4567O', 'PQR89012T'),
+(33, 'ST5678U', 'VWX90123N'),
+(35, 'YZ6789A', 'BCD01234K'),
+(37, 'EF7890D', 'FGH12345Q'),
+(40, 'HI8901J', 'LMN23456S'),
+(42, 'OP9012L', 'QRS34567B'),
+(44, 'WX0123V', 'UVW45678X');

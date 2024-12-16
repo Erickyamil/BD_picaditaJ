@@ -1,0 +1,366 @@
+DROP DATABASE IF EXISTS Picadita;
+CREATE DATABASE Picadita;
+USE Picadita;
+
+DROP TABLE IF EXISTS RazonSocial;
+CREATE TABLE RazonSocial(
+	razon_social_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(30) NOT NULL,
+	rfc_razon_social VARCHAR(13) NOT NULL);
+	
+DROP TABLE IF EXISTS Politica;
+CREATE TABLE Politica(
+	politica_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nombre_politica VARCHAR(50) NOT NULL,
+	condicion VARCHAR(20) NOT NULL,
+	fecha_agregada DATETIME DEFAULT NULL);
+
+DROP TABLE IF EXISTS Financiera;
+CREATE TABLE Financiera(
+	politica_id INT(5) NOT NULL,
+	valor DOUBLE NOT NULL,
+	FOREIGN KEY (politica_id) REFERENCES Politica(politica_id));
+	
+DROP TABLE IF EXISTS Sucursal;
+CREATE TABLE Sucursal(
+	sucursal_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nombre_sucursal VARCHAR(15) NOT NULL,
+	ubicacion_sucursal VARCHAR(60) NOT NULL,
+	horario_sucursal_apertura TIME DEFAULT NULL,
+	horario_sucursal_cierre TIME DEFAULT NULL,
+	numero_telefonico_sucursal CHAR(12) NOT NULL,
+	rfc_sucursal VARCHAR(13) NOT NULL);
+	
+-- Relacion muchos a muchos de sucursal con politica
+DROP TABLE IF EXISTS SeAplica;
+CREATE TABLE SeAplica (
+   politica_id INT,
+   sucursal_id INT,
+   PRIMARY KEY (politica_id, sucursal_id),
+   FOREIGN KEY (politica_id) REFERENCES Politica(politica_id),
+   FOREIGN KEY (sucursal_id) REFERENCES Sucursal(sucursal_id));
+
+-- Relacion muchos a muchos de sucursal con razon social
+DROP TABLE IF EXISTS Tiene;
+CREATE TABLE Tiene (
+   razon_social_id INT,
+   sucursal_id INT,
+   PRIMARY KEY (razon_social_id, sucursal_id),
+   FOREIGN KEY (razon_social_id) REFERENCES RazonSocial(razon_social_id),
+   FOREIGN KEY (sucursal_id) REFERENCES Sucursal(sucursal_id));
+   
+DROP TABLE IF EXISTS Mesa;
+CREATE TABLE Mesa(
+	mesa_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	numero_mesa VARCHAR(5) NOT NULL,
+	total_personas INT(2) NOT NULL,
+	sucursal_id INT,
+	FOREIGN KEY (sucursal_id) REFERENCES Sucursal(sucursal_id));
+	
+DROP TABLE IF EXISTS Submesa;
+CREATE TABLE Submesa(
+	submesa_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nombre_cliente VARCHAR(20),
+	fecha DATETIME DEFAULT NULL,
+	numero_personas INT(2) NOT NULL,
+	mesa_id INT,
+	FOREIGN KEY (mesa_id) REFERENCES Mesa(mesa_id));
+	
+DELIMITER $$
+
+CREATE TRIGGER actualizar_no_orden_diario
+BEFORE INSERT ON Orden
+FOR EACH ROW
+BEGIN
+    DECLARE numero INT;
+    -- Calcular el número de orden del día
+    SELECT IFNULL(MAX(no_orden_diario), 0) + 1 INTO numero
+    FROM Orden
+    WHERE DATE(fecha) = DATE(NEW.fecha);
+    -- Asignar el número calculado al nuevo registro
+    SET NEW.no_orden_diario = numero;
+END $$
+
+DELIMITER ;
+
+
+DROP TABLE IF EXISTS Orden;
+CREATE TABLE Orden (
+    orden_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,  
+    folio VARCHAR(5) NOT NULL,                            
+    tipo VARCHAR(10) NOT NULL,                            
+    forma_pago CHAR(10) NOT NULL,                         
+    fecha DATETIME NOT NULL,                              
+    cambio DECIMAL(10, 2) NOT NULL,                       
+    entregado DECIMAL(10, 2) NOT NULL,                    
+    submesa_id INT,                                       
+    subtotal DECIMAL(10, 2) GENERATED ALWAYS AS (entregado - cambio) STORED, 
+    total DECIMAL(10, 2) GENERATED ALWAYS AS (subtotal * 1.16) STORED,       
+    no_orden_diario INT,                                  
+    FOREIGN KEY (submesa_id) REFERENCES Submesa(submesa_id) 
+);
+
+
+
+DROP TABLE IF EXISTS Factura;
+CREATE TABLE Factura (
+   factura_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   uso_cfdi INT(20) NOT NULL,
+   rfc VARCHAR(13) NOT NULL,
+   regimen_fiscal VARCHAR(6) NOT NULL,
+   domicilio_fiscal VARCHAR(60) NOT NULL,
+   referencia VARCHAR(20) NOT NULL,
+   nombre_sat VARCHAR(60) NOT NULL,
+   fecha_emision_factura DATETIME DEFAULT NULL,
+	orden_id INT,
+	FOREIGN KEY(orden_id) REFERENCES Orden(orden_id));
+
+
+DROP TABLE IF EXISTS Convenio;
+CREATE TABLE Convenio (
+   convenio_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   empresa VARCHAR(20) NOT NULL,
+   beneficio VARCHAR(60) NOT NULL,
+   condicion VARCHAR(20) NOT NULL,
+   fecha_registro DATE DEFAULT NULL,
+   fecha_inicio DATE DEFAULT NULL,
+   fecha_fin DATE DEFAULT NULL,
+	orden_id INT,
+	FOREIGN KEY(orden_id) REFERENCES Orden(orden_id));
+	
+-- Relacion muchos a muchos de orden con promocion
+DROP TABLE IF EXISTS Aplica;
+CREATE TABLE Aplica (
+   orden_id INT,
+   promocion_id INT,
+   PRIMARY KEY (orden_id, promocion_id),
+   FOREIGN KEY (orden_id) REFERENCES Orden(orden_id),
+   FOREIGN KEY (promocion_id) REFERENCES Promocion(promocion_id));
+	
+
+DROP TABLE IF EXISTS Transaccion;
+CREATE TABLE Transaccion (
+   transaccion_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   monedero_id INT(5) NOT NULL,
+   monto DECIMAL(10, 2) NOT NULL,  -- Monto de la transacción (+ ingreso, - gasto)
+   fecha_transaccion DATETIME NOT NULL,
+   tipo_transaccion ENUM('ingreso', 'gasto') NOT NULL,  -- Tipo de transacción
+   FOREIGN KEY (monedero_id) REFERENCES Monedero(monedero_id)
+);
+
+
+DROP TABLE IF EXISTS Monedero;
+CREATE TABLE Monedero (
+   monedero_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   nombre_cliente VARCHAR(20) NOT NULL,
+   apellido_paterno_cliente VARCHAR(15) NOT NULL,
+   apellido_materno_cliente VARCHAR(15),
+   fecha_nacimiento_cliente DATE NOT NULL,
+   fecha_registro DATETIME NOT NULL,
+   saldo DECIMAL(10, 2) GENERATED ALWAYS AS (
+       (SELECT IFNULL(SUM(monto), 0) 
+        FROM Transaccion 
+        WHERE Transaccion.monedero_id = Monedero.monedero_id)
+   ) STORED
+);
+	
+DROP TABLE IF EXISTS Caja;
+CREATE TABLE Caja (
+    caja_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,  
+    fecha DATE NOT NULL,                                 
+    saldo_caja DECIMAL(10, 2) GENERATED ALWAYS AS (     
+        (SELECT IFNULL(SUM(total), 0) 
+         FROM Orden 
+         WHERE DATE(Orden.fecha) = Caja.fecha)
+    ) STORED
+);
+
+
+DROP TABLE IF EXISTS Empleado;
+CREATE TABLE Empleado (
+   empleado_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   apellido_paterno VARCHAR(20) NOT NULL,
+   apellido_materno VARCHAR(20) NOT NULL,
+   rfc VARCHAR(13) NOT NULL,
+   telefono CHAR(10) NOT NULL,
+   cargo VARCHAR(30) NOT NULL,
+   turno BOOLEAN NOT NULL,
+   salario DECIMAL(10,2) NOT NULL,
+   nombre VARCHAR(20) NOT NULL,
+   curp VARCHAR(18) NOT NULL,
+	caja_id INT,
+	FOREIGN KEY(caja_id) REFERENCES Caja(caja_id));
+
+DROP TABLE IF EXISTS Atiende;
+CREATE TABLE Atiende (
+    atiende_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  
+    caja_id INT NOT NULL,                                 
+    empleado_id INT NOT NULL,                             
+    saldo_inicial DECIMAL(10, 2) NOT NULL,                
+    transaccion_id INT NOT NULL,                          
+    monto DECIMAL(10, 2) NOT NULL,                        
+    fecha DATETIME NOT NULL,                             
+    FOREIGN KEY (caja_id) REFERENCES Caja(caja_id),      
+    FOREIGN KEY (empleado_id) REFERENCES Empleado(empleado_id) 
+);
+
+DELIMITER $$
+
+CREATE TRIGGER actualizar_saldo_caja
+AFTER INSERT ON Atiende
+FOR EACH ROW
+BEGIN
+    -- Actualiza el saldo de la caja al restar el monto de la transacción
+    UPDATE Caja
+    SET saldo_caja = saldo_caja - NEW.monto
+    WHERE caja_id = NEW.caja_id;
+END $$
+
+DELIMITER ;
+
+CREATE TABLE Cajero (
+    empleado_id INT NOT NULL PRIMARY KEY,                 
+    total_transacciones INT DEFAULT 0,                    
+    FOREIGN KEY (empleado_id) REFERENCES Empleado(empleado_id)
+);
+
+DELIMITER $$
+
+CREATE TRIGGER actualizar_total_transacciones
+AFTER INSERT ON Atiende
+FOR EACH ROW
+BEGIN
+    -- Actualiza el total de transacciones del cajero
+    UPDATE Cajero
+    SET total_transacciones = total_transacciones + 1
+    WHERE empleado_id = NEW.empleado_id;
+END $$
+
+DELIMITER ;
+	
+DROP TABLE IF EXISTS Repartidor;
+CREATE TABLE Repartidor(
+	matricula_vehiculo VARCHAR(7) NOT NULL,
+	no_licencia VARCHAR(9) NOT NULL,
+	empleado_id INT,
+	FOREIGN KEY(empleado_id) REFERENCES Empleado(empleado_id));
+
+
+DROP TABLE IF EXISTS OrdenDomicilio;
+CREATE TABLE OrdenDomicilio(
+	direccion VARCHAR(80) NOT NULL,
+	coste DECIMAL(10) NOT NULL,
+	orden_id INT,
+	empleado_id INT,
+	FOREIGN KEY(empleado_id) REFERENCES Empleado(empleado_id),
+	FOREIGN KEY(orden_id) REFERENCES Orden(orden_id));
+
+DROP TABLE IF EXISTS Categoria;
+CREATE TABLE Categoria (
+   categoria_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   nombre_categoria VARCHAR(30) NOT NULL);
+
+
+
+
+DROP TABLE IF EXISTS Producto_Paquete;
+CREATE TABLE Producto_Paquete (
+   producto_paquete_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   producto_id INT,
+   FOREIGN KEY (producto_id) REFERENCES Producto(producto_id));
+
+
+DROP TABLE IF EXISTS Inventario;
+CREATE TABLE Inventario (
+   objeto_inventario_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   cantidad_en_inventario INT(5) NOT NULL,
+   unidad_medida VARCHAR(20) NOT NULL);
+
+
+DROP TABLE IF EXISTS Producto_Inventario;
+CREATE TABLE Producto_Inventario (
+   producto_id INT NOT NULL,
+   objeto_inventario_id INT NOT NULL,
+   PRIMARY KEY (producto_id, objeto_inventario_id),
+   FOREIGN KEY (producto_id) REFERENCES Producto(producto_id),
+   FOREIGN KEY (objeto_inventario_id) REFERENCES Inventario(objeto_inventario_id));
+
+
+DROP TABLE IF EXISTS Ingrediente;
+CREATE TABLE Ingrediente (
+   ingrediente_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   nombre_ingrediente VARCHAR(30) NOT NULL,
+   objeto_inventario_id INT NOT NULL, 
+	FOREIGN KEY (objeto_inventario_id) REFERENCES Inventario(objeto_inventario_id));
+   
+DROP TABLE IF EXISTS Proveedor;   
+CREATE TABLE Proveedor (
+   proveedor_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   nombre_proveedor VARCHAR(30) NOT NULL,
+   telefono VARCHAR(15),
+   correo VARCHAR(60),
+   direccion VARCHAR(60));
+
+
+DROP TABLE IF EXISTS Ingrediente_Proveedor; 
+CREATE TABLE Ingrediente_Proveedor (
+   ingrediente_id INT NOT NULL,
+   proveedor_id INT NOT NULL,
+   PRIMARY KEY (ingrediente_id, proveedor_id),
+   FOREIGN KEY (ingrediente_id) REFERENCES Ingrediente(ingrediente_id),
+   FOREIGN KEY (proveedor_id) REFERENCES Proveedor(proveedor_id));
+  
+DROP TABLE IF EXISTS Producto; 
+CREATE TABLE Producto (
+   producto_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   precio_unitario DECIMAL(10,2) NOT NULL,
+   nombre_producto VARCHAR(15) NOT NULL,
+   categoria_id INT,
+   FOREIGN KEY(categoria_id) REFERENCES Categoria(categoria_id)
+);
+
+DROP TABLE IF EXISTS Orden;
+CREATE TABLE Orden (
+   orden_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   usuario_id INT(5) NOT NULL,
+   fecha_orden DATETIME NOT NULL
+);
+
+
+DROP TABLE IF EXISTS Promocion;
+CREATE TABLE Promocion (
+   promocion_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   nombre VARCHAR(30) NOT NULL,
+   descripcion VARCHAR(60) NOT NULL,
+   condicion ENUM('descuento', 'oferta', 'combo') NOT NULL,  
+   dia_aplicable ENUM('lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo') NOT NULL,
+   fecha_registro DATETIME NOT NULL,
+   fecha_inicio DATETIME NOT NULL,
+   fecha_fin DATETIME DEFAULT NULL,
+   promocion_activa BOOLEAN NOT NULL
+);
+
+DROP TABLE IF EXISTS OrdenDetalle;
+CREATE TABLE OrdenDetalle (
+   detalle_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   cantidad INT(2) NOT NULL,
+   precio_unitario DECIMAL(10, 2) NOT NULL,  
+   importe DECIMAL(10, 2) GENERATED ALWAYS AS (cantidad * precio_unitario) STORED, 
+   orden_id INT,
+   promocion_id INT,  
+   FOREIGN KEY (orden_id) REFERENCES Orden(orden_id),
+   FOREIGN KEY (promocion_id) REFERENCES Promocion(promocion_id)  
+);
+
+
+DROP TABLE IF EXISTS ProductoPromocion;
+CREATE TABLE ProductoPromocion (
+   producto_id INT(5) NOT NULL,
+   promocion_id INT(5) NOT NULL,
+   PRIMARY KEY (producto_id, promocion_id),
+   FOREIGN KEY(producto_id) REFERENCES Producto(producto_id),
+   FOREIGN KEY(promocion_id) REFERENCES Promocion(promocion_id)
+);
+
+
+SHOW TABLES;
